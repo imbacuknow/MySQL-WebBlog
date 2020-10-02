@@ -20,9 +20,9 @@ public class Tag {
     @Column(name = "tag_color")
     private String tagColor;
 
-//    @JoinColumn(name = "tag_id")
-//    @OneToMany(targetEntity = PostTag.class, mappedBy = "postTag")
-//    private List<PostTag> postTags; // relateTag
+    @JoinColumn(name = "tag_id")
+    @OneToMany(targetEntity = PostTag.class)
+    private List<PostTag> postTags; // relateTag
 
     // Getter
     public Long getId() {
@@ -37,9 +37,9 @@ public class Tag {
         return tagColor;
     }
 
-//    public List<PostTag> getPostTags() {
-//        return postTags;
-//    }
+    public List<PostTag> getPostTags() {
+        return postTags;
+    }
 
     // Setter
     public void setId(Long id) {
@@ -54,9 +54,9 @@ public class Tag {
         this.tagColor = tagColor;
     }
 
-//    public void setPostTags(List<PostTag> postTags) {
-//        this.postTags = postTags;
-//    }
+    public void setPostTags(List<PostTag> postTags) {
+        this.postTags = postTags;
+    }
 
     // Constructor
     public Tag() {}

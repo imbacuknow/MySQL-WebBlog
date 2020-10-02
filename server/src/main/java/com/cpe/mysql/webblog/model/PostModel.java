@@ -15,6 +15,7 @@ public class PostModel {
     private boolean verified;
     @NotNull
     private User user;
+    private String[] tag;
 
     public String getTitle() {
         return title;
@@ -56,5 +57,14 @@ public class PostModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    public String[] getTag() {
+        return tag;
+    }
+
+    public void setTag(String[] tag) {
+        this.tag = tag;
     }
 }

@@ -38,9 +38,9 @@ public class Post {
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     private List<Comment> comments; // inPost
 
-//    @JoinColumn(name = "post_id")
-//    @OneToMany(targetEntity = PostTag.class, cascade = CascadeType.ALL)
-//    private List<PostTag> postTags; // ofPost
+    @JoinColumn(name = "post_id")
+    @OneToMany(targetEntity = PostTag.class, cascade = CascadeType.ALL)
+    private List<PostTag> postTags; // ofPost
 
     public Long getId() {
         return id;
@@ -67,13 +67,13 @@ public class Post {
         return user;
     }
 
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public List<PostTag> getPostTags() {
-//        return postTags;
-//    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public List<PostTag> getPostTags() {
+        return postTags;
+    }
 
     // Setter
     public void setId(Long id) {
@@ -100,11 +100,11 @@ public class Post {
         this.user = user;
     }
 
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
-//
-//    public void setPostTags(List<PostTag> postTags) {
-//        this.postTags = postTags;
-//    }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setPostTags(List<PostTag> postTags) {
+        this.postTags = postTags;
+    }
 }
