@@ -39,6 +39,11 @@ public class PostController {
         return postService.createPost(post);
     }
 
+    @PutMapping("update/{id}")
+    public ResponseEntity<Object> updatePost(@PathVariable Long id) {
+        return postService.updateVerified(id);
+    }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deletePost(@PathVariable Long id) {
         return postService.deletePost(id);

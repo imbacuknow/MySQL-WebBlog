@@ -18,7 +18,7 @@ public class Role {
     private String roleOfUser;      // 3. Admin
 
     @JoinColumn(name = "role_id")
-    @OneToMany(targetEntity = User.class)
+    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL)
     private List<User> users; // userRole
 
     // Getter
