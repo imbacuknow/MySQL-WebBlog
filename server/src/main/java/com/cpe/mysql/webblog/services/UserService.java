@@ -21,7 +21,7 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-//    // create a new user
+    // create a new user
     public ResponseEntity<Object> createUser(UserModel model) {
         User user = new User();
 
@@ -42,6 +42,18 @@ public class UserService {
             User saveUser = userRepository.save(user);
             return ResponseEntity.ok("User is created.");
         }
+    }
+
+    // update role
+    public ResponseEntity<Object> updateUserRole(Long userid, Long roleid) {
+        Optional<Role> role = roleRepository.findById(roleid);
+        if(userRepository.findById(userid).isPresent()) {
+            Optional<User> update_user = userRepository.findById(userid).map(user -> {
+                user.setRole(role.get());
+                return userRepository.save(user);
+            });
+            return ResponseEntity.ok("Update UserRole");
+        } else return ResponseEntity.unprocessableEntity().body("No Records Found.");
     }
 
     // delete a user

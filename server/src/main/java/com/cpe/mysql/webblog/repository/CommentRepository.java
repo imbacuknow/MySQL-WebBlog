@@ -12,6 +12,5 @@ import java.util.List;
 @Repository
 @RepositoryRestResource
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-
     Collection<Comment> findByPost(Post post);
 }

@@ -34,12 +34,10 @@ public class PostService {
         np.setUser(model.getUser());
 
         Post saveNP = postRepository.save(np);
-
         // map posttag
         for(int i = 0; i < model.getTag().length; i++) {
             addPostTag(model.getTag()[i], np);
         }
-
         return ResponseEntity.ok("Post Create Successfully.");
     }
 
