@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -32,6 +33,11 @@ public class PostController {
     @GetMapping("home")
     public Collection<Post> getHomePage() {
         return postRepository.findByVerified(true);
+    }
+
+    @GetMapping("content/{id}")
+    public Optional<Post> getContentId(@PathVariable Long id) {
+        return postRepository.findById(id);
     }
 
     @PostMapping("create")

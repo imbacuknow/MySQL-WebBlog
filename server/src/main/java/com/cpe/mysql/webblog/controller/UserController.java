@@ -30,9 +30,19 @@ public class UserController {
         else return null;
     }
 
+    @GetMapping("login/{username}/{password}")
+    public User userLogIn(@PathVariable String username, @PathVariable String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
     @PostMapping("create")
     public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userService.createUser(user);
+    }
+
+    @PutMapping("update/{userid}/{roleid}")
+    public ResponseEntity<Object> updateUser(@PathVariable Long userid, @PathVariable Long roleid) {
+        return userService.updateUserRole(userid, roleid);
     }
 
     @DeleteMapping("delete/{id}")
