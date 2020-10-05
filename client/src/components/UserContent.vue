@@ -1,0 +1,161 @@
+<template>
+     <div align="center">
+          <v-card
+               class="rounded-lg amber lighten-4"
+               width="800"
+               height="auto"
+               max-height="2000"
+          >
+               <v-col cols="12" sm="8" md="10">
+                    <v-card-title>{{ set_content.title }}</v-card-title>
+               </v-col>
+
+               <v-col align="left" class="" cols="12" sm="8" md="10">
+                    <v-card-text>{{ set_content.story }}</v-card-text>
+               </v-col>
+
+               <v-col align="right">
+                    <v-btn
+                         class="ma-4"
+                         raised
+                         @click="goToHome"
+                         x-large
+                         dark
+                         color="brown darken-3"
+                         >Back</v-btn
+                    >
+               </v-col>
+          </v-card>
+          <br />
+
+          <v-card width="800" class="grey lighten-5">
+               <!--  -->
+               <v-card-text class="blue-grey darken-1 white--text">
+                    <h2>Comment Zone</h2>
+               </v-card-text>
+               <!-- list comment -->
+               <v-list
+                    three-line
+                    class="grey lighten-5 black--text"
+                    align="left"
+               >
+                    <v-list-item-group
+                         v-model="selected"
+                         multiple
+                         class="grey lighten-5 mx-2"
+                    >
+                         <template v-for="(item, index) in comments">
+                              <v-list-item :key="item.id">
+                                   <v-list-item-content>
+                                        <v-list-item-title>
+                                             <h4>
+                                                  {{ item.commented.username }}
+                                             </h4>
+                                        </v-list-item-title>
+                                        <v-list-item-subtitle
+                                             class="black--text"
+                                             v-text="item.msg"
+                                        />
+                                   </v-list-item-content>
+                              </v-list-item>
+                              <v-divider :key="index" :inset="false" />
+                         </template>
+                    </v-list-item-group>
+               </v-list>
+               <!--  -->
+               <v-form class="mx-2">
+                    <v-container>
+                         <v-col class="grey lighten-3">
+                              <v-row>
+                                   <v-text-field
+                                        class="mx-2"
+                                        v-model="cmt"
+                                        label="Comment"
+                                   />
+                              </v-row>
+                              <v-row justify="center">
+                                   <v-btn
+                                        class="mx-2"
+                                        @click="onClickCM"
+                                        raised
+                                        dark
+                                        width="720"
+                                        color="green lighten-2"
+                                        >comment</v-btn
+                                   >
+                              </v-row>
+                         </v-col>
+                    </v-container>
+               </v-form>
+          </v-card>
+     </div>
+</template>
+
+<script>
+import api from "../api.js";
+import SingleComment from "./SingleComment.vue";
+
+export default {
+     name: "UserContent",
+     components: [SingleComment],
+     props: ["content_id"],
+     data: () => ({
+          set_content: [],
+          comments: [],
+          cmt: "",
+          Users: [],
+     }),
+     mounted() {
+          this.getContent();
+     },
+     methods: {
+          goToHome() {
+               this.$router.push({ name: "Home" });
+          },
+          getContent() {
+               api.get("/webblog/post/content/" + this.content_id)
+                    .then((response) => {
+                         this.set_content = response.data;
+                         console.log(JSON.parse(JSON.stringify(response.data)));
+                         this.showCommentInPost();
+                    })
+                    .catch((e) => {
+                         console.log("Error in getForDisContent():" + e);
+                    });
+          },
+          showCommentInPost() {
+               this.comments = null;
+               api.get("/webblog/comment/postId/" + this.content_id)
+                    .then((response) => {
+                         this.comments = response.data;
+                         console.log(JSON.parse(JSON.stringify(this.comments)));
+                    })
+                    .catch((e) => {
+                         console.log("Error in showCommentInPost():" + e);
+                    });
+          },
+          onClickCM() {
+               if (!this.cmt) {
+                    alert("กรุณากรอกข้อความ comment");
+               } else {
+                    this.submitComment();
+               }
+          },
+          submitComment() {
+               let databox = {
+                    msg: this.cmt,
+                    commentId: 4,
+                    ofCommentId: this.content_id,
+               };
+               api.post("/webblog/comment/add_new", databox)
+                    .then(() => {
+                         this.cmt = null;
+                         this.showCommentInPost();
+                    })
+                    .catch((e) => {
+                         console.log("Error in submitComment():" + e);
+                    });
+          },
+     },
+};
+</script>
