@@ -55,7 +55,13 @@ public class WebBlogApplication {
 //			Date date2 = new Date(time2.getTime());
 //			//create user
 //			User usr2 = new User("imbac", "2222", "Bac Natthawut", "imbac@gmail.com", date2, role2);
-//			Stream.of(usr1, usr2).forEach((usr -> {
+//
+//			// set date time
+//			Timestamp time3 = new Timestamp(System.currentTimeMillis());
+//			Date date3 = new Date(time3.getTime());
+//			//create user
+//			User usr3 = new User("admin", "admin", "admin ADMIN", "admin@gmail.com", date3, role3);
+//			Stream.of(usr1, usr2, usr3).forEach((usr -> {
 //				userRepository.save(usr);
 //				System.out.println(usr);
 //			}));

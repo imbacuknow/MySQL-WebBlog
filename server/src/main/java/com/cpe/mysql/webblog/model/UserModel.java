@@ -11,9 +11,7 @@ public class UserModel {
     private String username;
     @NotNull
     private String password;
-    @NotNull
     private String name;
-    @NotNull
     private String email;
     private Date registerDate;
     private Role role;

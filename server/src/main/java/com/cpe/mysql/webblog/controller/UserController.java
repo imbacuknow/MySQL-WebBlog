@@ -30,6 +30,11 @@ public class UserController {
         else return null;
     }
 
+    @GetMapping("login/{username}/{password}")
+    public User userLogIn(@PathVariable String username, @PathVariable String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
     @PostMapping("create")
     public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userService.createUser(user);
