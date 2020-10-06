@@ -4,23 +4,23 @@ import javax.validation.constraints.NotNull;
 
 public class TagModel {
     @NotNull
-    private String tagName;
+    private String text;
     @NotNull
-    private String tagColor;
+    private String color;
 
-    public String getTagName() {
-        return tagName;
+    public String getText() {
+        return text;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getTagColor() {
-        return tagColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setTagColor(String tagColor) {
-        this.tagColor = tagColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 }

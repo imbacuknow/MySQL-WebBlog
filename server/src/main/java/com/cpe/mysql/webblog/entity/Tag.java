@@ -14,11 +14,11 @@ public class Tag {
 
     @NotNull
     @Column(name = "name_tag")
-    private String tagName;
+    private String text;
 
     @NotNull
     @Column(name = "tag_color")
-    private String tagColor;
+    private String color;
 
     @JoinColumn(name = "tag_id")
     @OneToMany(targetEntity = PostTag.class)
@@ -29,12 +29,12 @@ public class Tag {
         return id;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getText() {
+        return text;
     }
 
-    public String getTagColor() {
-        return tagColor;
+    public String getColor() {
+        return color;
     }
 
     public List<PostTag> getPostTags() {
@@ -46,12 +46,12 @@ public class Tag {
         this.id = id;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public void setTagColor(String tagColor) {
-        this.tagColor = tagColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setPostTags(List<PostTag> postTags) {
@@ -61,9 +61,9 @@ public class Tag {
     // Constructor
     public Tag() {}
 
-    public Tag(@NotNull String tagName,
-               @NotNull String tagColor) {
-        this.tagName = tagName;
-        this.tagColor = tagColor;
+    public Tag(@NotNull String text,
+               @NotNull String color) {
+        this.text = text;
+        this.color = color;
     }
 }

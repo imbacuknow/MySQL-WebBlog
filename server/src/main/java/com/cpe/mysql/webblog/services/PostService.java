@@ -44,7 +44,7 @@ public class PostService {
     // add post along with tag
     public ResponseEntity<Object> addPostTag(String tag, Post np){
         PostTag pt = new PostTag();
-        Optional<Tag> tg = tagRepository.findByTagName(tag);
+        Optional<Tag> tg = tagRepository.findByText(tag);
         pt.setTag(tg.get());
         pt.setPost(np);
         postTagRepository.save(pt);

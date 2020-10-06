@@ -30,8 +30,12 @@ public class TagController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<Object> addTag(@RequestBody TagModel tag) {
-        return tagService.addTag(tag);
+    public ResponseEntity<Object> addTag(@RequestBody TagModel[] tag) {
+        for(int i = 0; i < tag.length; i++) {
+            tagService.addTag(tag[i]);
+        }
+
+        return ResponseEntity.ok().body("Tag is added.");
     }
 
     @DeleteMapping("delete/{id}")
