@@ -113,10 +113,6 @@
                          </template>
                     </v-combobox>
                </v-col>
-
-               <v-col class="my-2" cols="12" sm="5" md="8">
-               <v-btn @click="pushTagArr()" x-large color="Primmary" dark>Add tag</v-btn>
-               </v-col>
                <!-- ^^^^ tag ^^^^ -->
 
                <v-col class="mt-n7" cols="12" sm="8" md="10">
@@ -294,6 +290,7 @@ export default {
                     this.ins_title = null;
                     this.ins_story = null;
                     this.ArrName = null;
+                    this.model = null;
                     this.storageNewTag = null;
                     this.getTag();
                }).catch((e) => {
