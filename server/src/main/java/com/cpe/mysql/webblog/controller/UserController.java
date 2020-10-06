@@ -3,11 +3,14 @@ package com.cpe.mysql.webblog.controller;
 import com.cpe.mysql.webblog.entity.Role;
 import com.cpe.mysql.webblog.entity.User;
 import com.cpe.mysql.webblog.model.UserModel;
+import com.cpe.mysql.webblog.repository.RoleRepository;
 import com.cpe.mysql.webblog.repository.UserRepository;
 import com.cpe.mysql.webblog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -16,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     private UserService userService;
 
@@ -33,6 +39,12 @@ public class UserController {
     @GetMapping("login/{username}/{password}")
     public User userLogIn(@PathVariable String username, @PathVariable String password) {
         return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    @GetMapping("role/{username}")
+    public String getRoleOfUser(@PathVariable String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return roleRepository.findByUsers(user.get()).getRoleOfUser();
     }
 
     @PostMapping("create")

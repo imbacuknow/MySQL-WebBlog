@@ -26,9 +26,6 @@
                     />
                </v-col>
 
-               <!-- <v-col cols="12" sm="8" md="10">
-            <Tag @createNewTag="receiveTag" />
-         </v-col> -->
                <!-- tag   -->
                <v-col cols="12" sm="8" md="10">
                     <v-combobox
@@ -68,12 +65,12 @@
                               <v-chip
                                    v-if="item === Object(item)"
                                    v-bind="attrs"
-                                   :color="`${item.tagColor} lighten-3`"
+                                   :color="`${item.color} lighten-3`"
                                    :input-value="selected"
                                    label
                                    small
                               >
-                                   <span class="pr-2">{{ item.tagName }}</span>
+                                   <span class="pr-2">{{ item.text }}</span>
                                    <v-icon
                                         small
                                         @click="parent.selectItem(item)"
@@ -84,7 +81,7 @@
                          <template v-slot:item="{ index, item }">
                               <v-text-field
                                    v-if="editing === item"
-                                   v-model="editing.tagName"
+                                   v-model="editing.text"
                                    autofocus
                                    flat
                                    background-color="transparent"
@@ -94,11 +91,11 @@
                               ></v-text-field>
                               <v-chip
                                    v-else
-                                   :color="`${item.tagColor} lighten-3`"
+                                   :color="`${item.color} lighten-3`"
                                    dark
                                    label
                                    small
-                                   >{{ item.tagName }}</v-chip
+                                   >{{ item.text }}</v-chip
                               >
                               <v-spacer></v-spacer>
                               <v-list-item-action @click.stop>
@@ -115,10 +112,10 @@
                               </v-list-item-action>
                          </template>
                     </v-combobox>
+               </v-col>
 
-                    <!-- <v-col class="my-2" cols="12" sm="5" md="8">
-               <v-btn @click="addTag" x-large color="Primmary" dark>Add tag</v-btn>
-            </v-col> -->
+               <v-col class="my-2" cols="12" sm="5" md="8">
+               <v-btn @click="pushTagArr()" x-large color="Primmary" dark>Add tag</v-btn>
                </v-col>
                <!-- ^^^^ tag ^^^^ -->
 
@@ -137,7 +134,7 @@
                </v-col>
 
                <v-col class="my-2" cols="12" sm="5" md="8">
-                    <v-btn @click="checkPost" x-large color="secondary" dark
+                    <v-btn @click="checkPost()" x-large color="secondary" dark
                          >Post</v-btn
                     >
                </v-col>
@@ -147,20 +144,17 @@
 
 <script>
 import api from "../api.js";
-// import Tag from "./Tag.vue";
-
 export default {
-     // components: [Tag],
      data: () => ({
+          // Post
           ins_title: undefined,
           ins_story: undefined,
           alertFailed: false,
           alertSuccess: false,
           alertmsg: undefined,
-          Tags: [],
-          // newTags: [],
-          tagid: [],
           tagname: [],
+          user: {},
+          ArrName: [],
 
           // Tag
           activator: null,
@@ -177,76 +171,48 @@ export default {
           search: null,
           y: 0,
      }),
+     // Tag
+     watch: {
+          model(val, prev) {
+               if (val.length === prev.length) return;
+               this.model = val.map((v) => {
+                    if (typeof v === 'string') {
+                         v = {
+                              text: v,
+                              color: this.random_color(this.colors),
+                         };
+                         this.items.push(v);
+                         this.nonce++;
+                    }
+                    return v;
+               });
+               // console.log("ArrName:");
+               // console.log(JSON.parse(JSON.stringify(this.ArrName)));
+               // console.log("StorageNewTag: ");
+               // console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
+          },
+     },
      mounted() {
-          // Tag
           this.getTag();
-
-          //Post
+          this.user = JSON.parse(localStorage.getItem("user"));
      },
      methods: {
-          postYourContent() {
-               let databox = {
-                    title: this.ins_title,
-                    story: this.ins_story,
-                    user: {"id": 1},
-                    tag: this.tagname,
-               };
-               console.log("tagname");
-               console.log(JSON.parse(JSON.stringify(this.tagname)));
-               api.post("/webblog/post/create", databox)
-                    .then(() => {
-                         this.clearAlert();
-                         this.alertSuccess = true;
-
-                         this.ins_title = null;
-                         this.ins_story = null;
-                         this.Tags = null;
-                         this.storageNewTag = null;
-                         // this.newTags = null;
+          // Tag
+          random_color(colors) {
+               return colors[Math.floor(Math.random() * colors.length)];
+          },
+          // Tag
+          getTag() {
+               api.get("/webblog/tag/showall")
+                    .then((response) => {
+                         this.items = response.data;
+                         console.log("items");
+                         console.log(JSON.parse(JSON.stringify(response.data)));
                     })
                     .catch((e) => {
-                         console.log("Error in postYourContent(): " + e);
+                         console.log("Error in getTag():" + e);
                     });
           },
-          checkPost() {
-               if (!this.ins_title || !this.ins_story) {
-                    this.clearAlert();
-                    this.alertmsg = "กรุณากรอกข้อมูลให้ครบ";
-                    this.alertFailed = true;
-               } else {
-                    this.addTag();
-               }
-          },
-          pushVarArr() {
-               for (let i = 0; i < this.model.length; i++) {
-                    this.tagname.push(this.model[i].nameTag);
-               }
-               this.postYourContent();
-          },
-          clearAlert() {
-               this.alertSuccess = false;
-               this.alertFailed = false;
-          },
-          // receiveTag(value) {
-          //    this.storageNewTag = value;
-          // console.log("In Post.vue");
-          // console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
-          // },
-          nameTag(value) {
-               this.Tags = value;
-               console.log("In Post.vue This.Tags");
-               console.log(JSON.parse(JSON.stringify(this.Tags)));
-          },
-          // postTag() {
-          //    api.post("webblog/add_tag", this.storageNewTag)
-          //       .then(() => {
-          //          console.log("Added Tags");
-          //       })
-          //       .catch(e => {
-          //          console.log("Error in postTags():" + e);
-          //       })
-          // },
-
           // Tag
           edit(index, item) {
                if (!this.editing) {
@@ -260,62 +226,85 @@ export default {
           filter(item, queryText, itemText) {
                if (item.header) return false;
                const hasValue = (val) => (val != null ? val : "");
-               const tagName = hasValue(itemText);
+               const text = hasValue(itemText);
                const query = hasValue(queryText);
                return (
-                    tagName
+                    text
                          .toString()
                          .toLowerCase()
                          .indexOf(query.toString().toLowerCase()) > -1
                );
           },
-          getTag() {
-               api.get("/webblog/tag/showall")
-                    .then((response) => {
-                         this.items = response.data;
-                         console.log("items");
-                         console.log(JSON.parse(JSON.stringify(response.data)));
-                    })
-                    .catch((e) => {
-                         console.log("Error in getTag():" + e);
-                    });
+          // Post
+          checkPost() {
+               if (!this.ins_title || !this.ins_story) {
+                    this.clearAlert();
+                    this.alertmsg = "กรุณากรอกข้อมูลให้ครบ";
+                    this.alertFailed = true;
+               } else {
+                    this.pushTagArr();
+               }
           },
+          // Tag
+          pushTagArr() {
+               for (let i = 0; i < this.model.length; i++) {
+                    if (!this.model[i].id) {
+                         let v = {
+                              text: this.model[i].text,
+                              color: this.model[i].color
+                         }
+                         this.storageNewTag.push(v); // for add new tag
+                         this.ArrName.push(this.model[i].text);
+                    } else {
+                         this.ArrName.push(this.model[i].text);
+                    }
+               }
+               console.log("ArrName:");
+               console.log(JSON.parse(JSON.stringify(this.ArrName)));
+               console.log("StorageNewTag: ");
+               console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
+               this.addTag();
+          },
+          // Tag
           addTag() {
                api.post("/webblog/tag/add", this.storageNewTag)
-                    .then(() => {
-                         console.log("Added Tags");
-                    })
-                    .catch((e) => {
-                         console.log("Error in postTag(): " + e);
-                    });
-               this.pushVarArr();
-          },
-          random_color(colors) {
-               return colors[Math.floor(Math.random() * colors.length)];
-          },
-          // ^^^^ Tag ^^^^
-     },
-     // Tag
-     watch: {
-          model(val, prev) {
-               if (val.length === prev.length) return;
-               this.model = val.map((v) => {
-                    if (typeof v === 'string') {
-                         v = {
-                              tagName: v,
-                              tagColor: this.random_color(this.colors),
-                         };
-                         this.storageNewTag.push(v);
-                         this.items.push(v);
-                         this.nonce++;
-                    }
-                    return v;
+               .then(() => {
+                    console.log("Added Tags");
+               })
+               .catch((e) => {
+                    console.log("Error in addTag(): " + e);
                });
-               console.log("Model");
-               console.log(JSON.parse(JSON.stringify(this.model)));
-               console.log("Space");
-               console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
+               this.postYourContent();
           },
-     },
+          // Post
+          postYourContent() {
+               let databox = {
+                    title: this.ins_title,
+                    story: this.ins_story,
+                    user: {
+                         id: this.user.id
+                    },
+                    tag: this.ArrName,
+               };
+               api.post("/webblog/post/create", databox)
+               .then(() => {
+                    this.clearAlert();
+                    this.alertSuccess = true;
+
+                    this.ins_title = null;
+                    this.ins_story = null;
+                    this.ArrName = null;
+                    this.storageNewTag = null;
+                    this.getTag();
+               }).catch((e) => {
+                    console.log("Error in postYourContent(): " + e);
+               });
+          },
+          // Post
+          clearAlert() {
+               this.alertSuccess = false;
+               this.alertFailed = false;
+          },
+     }
 };
 </script>

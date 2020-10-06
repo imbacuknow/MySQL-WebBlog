@@ -17,11 +17,11 @@
                                    </v-row>
                                    <br><br><br><br><br><br> 
                                    <v-card class="elevation-12">
-                                        <v-toolbar color="primary" dark flat>
+                                        <v-toolbar color="amber darken-3" dark flat>
                                              <v-toolbar-title
                                                   >LOGIN FORM</v-toolbar-title
                                              >
-                                             <v-spacer></v-spacer>
+                                             <v-spacer></v-spacer> 
                                              <v-tooltip bottom>
                                                   <template v-slot:activator="{ on }">
                                                        <v-btn
@@ -59,8 +59,9 @@
                                         <v-card-actions>
                                              <v-spacer></v-spacer>
                                              <v-btn 
-                                             color="primary"
-                                             @click="checkLogIn"
+                                             color="amber darken-2"
+                                             @click="checkLogIn()"
+                                             @keyup.enter="checkLogIn()"
                                                   >Login</v-btn
                                              ><v-spacer></v-spacer>
                                         </v-card-actions>
@@ -109,8 +110,16 @@ export default {
                     this.alertmsg = "กรุณากรอกข้อมูลให้ครบ";
                     this.alertFailed = true;
                } else {
-                    this.LogIn();
+                    this.RoleOfUser();
                }
+          },
+          RoleOfUser() {
+               api.get("/webblog/user/role/" + this.username)
+               .then((res) => {
+                    let role = res.data;
+                    localStorage.setItem("role", JSON.stringify(role));
+                    this.LogIn();
+               })
           },
           LogIn() {
                api.get("/webblog/user/login/" + this.username + "/" + this.password)
@@ -119,7 +128,7 @@ export default {
                     this.alertSuccess = true
                     let user = res.data;
                     localStorage.setItem("user", JSON.stringify(user));
-                    this.$router.go("/");
+                    window.location.href = "/"
                }).catch((e) => {
                     console.log("error in LogIn(): " + e);
                     this.loginError();

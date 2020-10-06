@@ -48,20 +48,27 @@ public class WebBlogApplication {
 //			Timestamp time1 = new Timestamp(System.currentTimeMillis());
 //			Date date1 = new Date(time1.getTime());
 //			//create user
-//			User usr1 = new User("admin1", "1111", "IAM ADMIN", "admin1@gmail.com", date1, role3);
-//
-//			// set date time
-//			Timestamp time2 = new Timestamp(System.currentTimeMillis());
-//			Date date2 = new Date(time2.getTime());
-//			//create user
-//			User usr2 = new User("imbac", "2222", "Bac Natthawut", "imbac@gmail.com", date2, role2);
+//			User usr1 = new User("admin1", "admin1", "IAM ADMIN1", "admin1@gmail.com", date1, role3);
 //
 //			// set date time
 //			Timestamp time3 = new Timestamp(System.currentTimeMillis());
 //			Date date3 = new Date(time3.getTime());
 //			//create user
-//			User usr3 = new User("admin", "admin", "admin ADMIN", "admin@gmail.com", date3, role3);
-//			Stream.of(usr1, usr2, usr3).forEach((usr -> {
+//			User usr3 = new User("admin2", "admin2", "IAM ADMIN2", "admin2@gmail.com", date3, role3);
+//
+//			// set date time
+//			Timestamp time2 = new Timestamp(System.currentTimeMillis());
+//			Date date2 = new Date(time2.getTime());
+//			//create user
+//			User usr2 = new User("imbac", "imbac", "Bac Natthawut", "imbac@gmail.com", date2, role2);
+//
+//			// set date time
+//			Timestamp time4 = new Timestamp(System.currentTimeMillis());
+//			Date date4 = new Date(time4.getTime());
+//			//create user
+//			User usr4 = new User("newbac", "newbac", "newBac Natthawut", "newbac@gmail.com", date4, role1);
+//
+//			Stream.of(usr1, usr2, usr3, usr4).forEach((usr -> {
 //				userRepository.save(usr);
 //				System.out.println(usr);
 //			}));

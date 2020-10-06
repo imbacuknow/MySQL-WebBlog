@@ -16,12 +16,12 @@ public class TagService {
     // add a new tag
     public ResponseEntity<Object> addTag(TagModel model) {
         Tag tag = new Tag();
-        if(tagRepository.findByTagName(model.getTagName()).isPresent()) {
+        if(tagRepository.findByText(model.getText()).isPresent()) {
             System.out.println("The tag is already present.");
             return ResponseEntity.badRequest().body("The Tag is already Present, Failed to Create new Tag.");
         } else {
-            tag.setTagName(model.getTagName());
-            tag.setTagColor(model.getTagColor());
+            tag.setText(model.getText());
+            tag.setColor(model.getColor());
 
             Tag saveTag = tagRepository.save(tag);
             return ResponseEntity.ok("Tag is added.");

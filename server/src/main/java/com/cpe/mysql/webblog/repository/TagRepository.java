@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 @RepositoryRestResource
 public interface TagRepository extends JpaRepository<Tag, Long> {
-    Optional<Tag> findByTagName(String tagName);
+    Optional<Tag> findByText(String text);
 }
