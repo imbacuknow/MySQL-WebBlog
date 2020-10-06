@@ -72,7 +72,7 @@
                                              class="white--text" 
                                              color="blue-grey darken-3"
                                              @click="checkRegister()"
-                                                  >Signin</v-btn
+                                                  >Enroll</v-btn
                                              >
                                              <v-spacer></v-spacer>
                                         </v-card-actions>
