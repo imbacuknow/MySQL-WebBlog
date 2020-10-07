@@ -16,6 +16,15 @@ public class PostModel {
     @NotNull
     private User user;
     private String[] tag;
+    private String userName;
+
+    public String getUserName() {
+        return getUser().getUsername();
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getTitle() {
         return title;

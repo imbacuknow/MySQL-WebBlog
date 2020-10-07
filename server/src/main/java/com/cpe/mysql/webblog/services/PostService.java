@@ -3,10 +3,12 @@ package com.cpe.mysql.webblog.services;
 import com.cpe.mysql.webblog.entity.Post;
 import com.cpe.mysql.webblog.entity.PostTag;
 import com.cpe.mysql.webblog.entity.Tag;
+import com.cpe.mysql.webblog.entity.User;
 import com.cpe.mysql.webblog.model.PostModel;
 import com.cpe.mysql.webblog.repository.PostRepository;
 import com.cpe.mysql.webblog.repository.PostTagRepository;
 import com.cpe.mysql.webblog.repository.TagRepository;
+import com.cpe.mysql.webblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,15 +25,19 @@ public class PostService {
     private TagRepository tagRepository;
     @Autowired
     private PostTagRepository postTagRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // create a new post
     public ResponseEntity<Object> createPost(PostModel model) {
         Post np = new Post();
+
         np.setTitle(model.getTitle());
         np.setStory(model.getStory());
         np.setPostDate(model.getPostDate());
         np.setVerified(model.getVerified());
         np.setUser(model.getUser());
+        np.setUserName(model.getUserName());
 
         Post saveNP = postRepository.save(np);
         // map posttag
@@ -47,6 +53,7 @@ public class PostService {
         Optional<Tag> tg = tagRepository.findByText(tag);
         pt.setTag(tg.get());
         pt.setPost(np);
+        pt.setTagName(pt.getTagName());
         postTagRepository.save(pt);
         return ResponseEntity.ok("PostTag " + tag);
     }

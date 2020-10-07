@@ -25,7 +25,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping(value = "upcoming", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "upcoming")
     public Collection<Post> getUpcomingPage() {
         return postRepository.findByVerified(false);
     }
@@ -40,7 +40,7 @@ public class PostController {
         return postRepository.findById(id);
     }
 
-    @PostMapping(value = "create", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "create")
     public ResponseEntity<Object> createPost(@RequestBody PostModel post) {
         return postService.createPost(post);
     }

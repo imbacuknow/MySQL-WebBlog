@@ -13,6 +13,15 @@ public class CommentModel {
     private Date commentDate;
     private User user;
     private Post post;
+    private String userName;
+
+    public String getUserName() {
+        return getUser().getUsername();
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getMsg() {
         return msg;

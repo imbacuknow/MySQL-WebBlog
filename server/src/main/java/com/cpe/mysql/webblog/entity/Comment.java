@@ -29,6 +29,17 @@ public class Comment {
     @JsonIgnore
     private Post post; // ofComment
 
+    @Transient
+    private String userName;
+
+    public String getUserName() {
+        return getUser().getUsername();
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     // Getter
     public Long getId() {
         return id;

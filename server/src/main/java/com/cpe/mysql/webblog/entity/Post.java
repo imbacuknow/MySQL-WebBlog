@@ -42,6 +42,17 @@ public class Post {
     @OneToMany(targetEntity = PostTag.class, cascade = CascadeType.ALL)
     private List<PostTag> postTags; // ofPost
 
+    @Transient
+    private String userName;
+
+    public String getUserName() {
+        return getUser().getUsername();
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public Long getId() {
         return id;
     }
