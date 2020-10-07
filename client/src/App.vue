@@ -27,7 +27,6 @@
                                         color="blue-grey darken-4"
                                    >
                                         <v-tab to="/">Home</v-tab>
-                                        <v-tab to="/Post">Post</v-tab>
                                         <v-tab to="/Login">Login</v-tab>
                                         <v-tabs-slider color="pink"></v-tabs-slider>
                                    </v-tabs>
@@ -40,7 +39,7 @@
           <!-- There is login -->
           <template v-else>
                <!-- Admin -->
-               <div v-if="role === 'Admin' ">
+               <div v-if="user.roleName === 'Admin' ">
                     <v-toolbar app class="light-blue" height="180px">
                          <v-col>
                               <v-row class="justify-center align-center">
@@ -76,7 +75,7 @@
                     </v-toolbar>
                </div>
                <!-- Experienced -->
-               <div v-else-if="role === 'Experienced' ">
+               <div v-else-if="user.roleName === 'Experienced' ">
                     <v-toolbar app class="light-blue" height="180px">
                          <v-col>
                               <v-row class="justify-center align-center">
@@ -160,9 +159,7 @@
 export default {
      data: () => ({
           user: {},
-          role: {},
           ThereIsSIgnIn: false,
-          roleOfUser: undefined
      }),
      mounted() {
           this.user = JSON.parse(localStorage.getItem("user"));
@@ -171,7 +168,6 @@ export default {
           } else {
                this.ThereIsSIgnIn = false;
           }
-          this.role = JSON.parse(localStorage.getItem("role"));
      },
      methods: {
           gotoHome() {

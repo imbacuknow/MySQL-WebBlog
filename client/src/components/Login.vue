@@ -78,7 +78,6 @@
 import api from "../api.js";
 export default {
      data: () => ({
-          user: {},
           username: undefined,
           password: undefined,
           value_icon: "mdi-eye",
@@ -110,22 +109,15 @@ export default {
                     this.alertmsg = "กรุณากรอกข้อมูลให้ครบ";
                     this.alertFailed = true;
                } else {
-                    this.RoleOfUser();
-               }
-          },
-          RoleOfUser() {
-               api.get("/webblog/user/role/" + this.username)
-               .then((res) => {
-                    let role = res.data;
-                    localStorage.setItem("role", JSON.stringify(role));
                     this.LogIn();
-               })
+               }
           },
           LogIn() {
                api.get("/webblog/user/login/" + this.username + "/" + this.password)
                .then((res) => {
                     this.clearAlert();
-                    this.alertSuccess = true
+                    this.alertFailed = true;
+                    
                     let user = res.data;
                     localStorage.setItem("user", JSON.stringify(user));
                     window.location.href = "/"
@@ -136,7 +128,7 @@ export default {
           },
           loginError() {
                this.clearAlert();
-               this.alertmsg = "ตรวจพบ username หรือ email ไม่ถูกต้อง";
+               this.alertmsg = "username หรือ password ไม่ถูกต้อง";
                this.alertFailed = true;
           }
      }
