@@ -49,7 +49,7 @@
                                    <v-list-item-content>
                                         <v-list-item-title>
                                              <h4>
-                                                  {{ item.commented.username }}
+                                                  {{ item.userName }}
                                              </h4>
                                         </v-list-item-title>
                                         <v-list-item-subtitle
@@ -93,46 +93,42 @@
 
 <script>
 import api from "../api.js";
-import SingleComment from "./SingleComment.vue";
-
 export default {
      name: "UserContent",
-     components: [SingleComment],
      props: ["content_id"],
      data: () => ({
           set_content: [],
           comments: [],
+          set_com:[],
           cmt: "",
-          Users: [],
+          user: [],
      }),
      mounted() {
           this.getContent();
+          this.user = JSON.parse(localStorage.getItem("user"));
      },
      methods: {
           goToHome() {
                this.$router.push({ name: "Home" });
           },
-          getContent() {
+           getContent() {
                api.get("/webblog/post/content/" + this.content_id)
-                    .then((response) => {
-                         this.set_content = response.data;
-                         console.log(JSON.parse(JSON.stringify(response.data)));
-                         this.showCommentInPost();
-                    })
-                    .catch((e) => {
-                         console.log("Error in getForDisContent():" + e);
-                    });
+               .then((response) => {
+                    this.set_content = response.data;
+                    console.log(JSON.parse(JSON.stringify(response.data)));
+                    this.getComments();
+               }).catch((e) => {
+                    console.log("Error in getForDisContent():" + e);
+               });
           },
-          showCommentInPost() {
-               this.comments = null;
+          getComments() {
                api.get("/webblog/comment/postId/" + this.content_id)
-                    .then((response) => {
-                         this.comments = response.data;
-                         console.log(JSON.parse(JSON.stringify(this.comments)));
-                    })
-                    .catch((e) => {
-                         console.log("Error in showCommentInPost():" + e);
-                    });
+               .then((res) => {
+                    this.comments = res.data;
+                    console.log(JSON.parse(JSON.stringify(res.data)));
+               }).catch((e) => {
+                    console.log("error in getComments(): "+ e);
+               });
           },
           onClickCM() {
                if (!this.cmt) {
@@ -144,18 +140,22 @@ export default {
           submitComment() {
                let databox = {
                     msg: this.cmt,
-                    commentId: 4,
-                    ofCommentId: this.content_id,
+                    user: {
+                         id: this.user.id
+                    },
+                    post: {
+                         id: this.content_id
+                    }
                };
                api.post("/webblog/comment/add_new", databox)
                     .then(() => {
                          this.cmt = null;
-                         this.showCommentInPost();
+                         this.getComments();
                     })
                     .catch((e) => {
                          console.log("Error in submitComment():" + e);
                     });
           },
      },
-};
+}
 </script>

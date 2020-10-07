@@ -15,6 +15,15 @@ public class UserModel {
     private String email;
     private Date registerDate;
     private Role role;
+    private String roleName;
+
+    public String getRoleName() {
+        return getRole().getRoleOfUser();
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public String getUsername() {
         return username;

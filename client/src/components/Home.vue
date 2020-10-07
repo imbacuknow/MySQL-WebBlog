@@ -1,45 +1,46 @@
-<template>
-     <div align="center">
-          <div>
-               <v-col v-for="(item, i) in list_posts" :key="i" cols="12">
-                    <v-card
-                         class="rounded-lg"
-                         width="780"
-                         height="230"
-                         color="#333333"
-                         dark
-                    >
-                         <div class="d-flex flex-no-wrap justify-space-between">
-                              <div>
-                                   <v-card-title
-                                        justify="center"
-                                        align="left"
-                                        style="height: 25%"
-                                        class="headline green accent-3 rounded-lg black--text"
-                                        @click="ReadMore(item.id)"
-                                        >{{
-                                             item.title.slice(0, 50)
-                                        }}</v-card-title
-                                   >
+<template class="rounded-lg justify-center align-center">
+     <div id="app">
+          <v-app id="inspire">
+               <v-card width="780" max-height="auto" class="mx-auto">
+                    <v-container>
+                         <v-row dense>
+                              <v-col
+                                   v-for="(item, i) in list_posts"
+                                   :key="i"
+                                   cols="12"
+                              >
+                                   <v-card color="#447585" dark>
+                                        <div
+                                             class="d-flex flex-no-wrap justify-space-between"
+                                        >
+                                             <div>
+                                                  <v-card-title
+                                                       class="headline"
+                                                       v-text="item.title"
+                                                       @click="ReadMore(item.id)"
+                                                  />
 
-                                   <v-card-text
-                                        align="left"
-                                        class="pa-2 my-3 px-4"
-                                        v-text="item.story.slice(0, 440)"
-                                   />
+                                                  <v-card-subtitle>{{item.story.slice(0,440)}}...</v-card-subtitle>
 
-                                   <div
-                                        align="left"
-                                        style="height: 19%"
-                                        class="pa-2 green accent-3 black--text"
-                                   >
-                                        Tag:
-                                   </div>
-                              </div>
-                         </div>
-                    </v-card>
-               </v-col>
-          </div>
+                                                  <v-card-action>
+                                                       <v-btn
+                                                       class="ml-5 mb-4"
+                                                       outlined
+                                                       rounded
+                                                       small
+                                                       @click="ReadMore(item.id)"
+                                                       >
+                                                       Read more
+                                                       </v-btn>
+                                                  </v-card-action>
+                                             </div>
+                                        </div>
+                                   </v-card>
+                              </v-col>
+                         </v-row>
+                    </v-container>
+               </v-card>
+          </v-app>
      </div>
 </template>
 

@@ -37,14 +37,13 @@ public class UserController {
     }
 
     @GetMapping("login/{username}/{password}")
-    public User userLogIn(@PathVariable String username, @PathVariable String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
-    }
-
-    @GetMapping("role/{username}")
-    public String getRoleOfUser(@PathVariable String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        return roleRepository.findByUsers(user.get()).getRoleOfUser();
+    public ResponseEntity<Object> userLogIn(@PathVariable String username, @PathVariable String password) {
+        Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
+        if(user.isPresent()) {
+            return ResponseEntity.ok().body(user.get());
+        } else {
+            return ResponseEntity.badRequest().body("error: nobody username be " + username);
+        }
     }
 
     @PostMapping("create")
@@ -52,9 +51,9 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PutMapping("update/{userid}/{roleid}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long userid, @PathVariable Long roleid) {
-        return userService.updateUserRole(userid, roleid);
+    @PutMapping("update/{username}/{roleid}")
+    public ResponseEntity<Object> updateUser(@PathVariable String username, @PathVariable Long roleid) {
+        return userService.updateUserRole(username, roleid);
     }
 
     @DeleteMapping("delete/{id}")

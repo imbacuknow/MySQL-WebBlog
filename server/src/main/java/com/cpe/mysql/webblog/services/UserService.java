@@ -38,6 +38,7 @@ public class UserService {
             user.setEmail(model.getEmail());
             user.setRegisterDate(model.getRegisterDate());
             user.setRole(model.getRole());
+            user.setRoleName(model.getRoleName());
 
             User saveUser = userRepository.save(user);
             return ResponseEntity.ok("User is created.");
@@ -45,10 +46,10 @@ public class UserService {
     }
 
     // update role
-    public ResponseEntity<Object> updateUserRole(Long userid, Long roleid) {
+    public ResponseEntity<Object> updateUserRole(String username, Long roleid) {
         Optional<Role> role = roleRepository.findById(roleid);
-        if(userRepository.findById(userid).isPresent()) {
-            Optional<User> update_user = userRepository.findById(userid).map(user -> {
+        if(userRepository.findByUsername(username).isPresent()) {
+            Optional<User> update_user = userRepository.findByUsername(username).map(user -> {
                 user.setRole(role.get());
                 return userRepository.save(user);
             });

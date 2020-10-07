@@ -22,6 +22,17 @@ public class PostTag {
     @JsonIgnore
     private Post post;
 
+    @Transient
+    private String tagName;
+
+    public String getTagName() {
+        return getTag().getText();
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
     // Getter
     public Long getId() {
         return id;

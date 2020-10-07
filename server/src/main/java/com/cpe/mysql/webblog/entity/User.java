@@ -48,6 +48,17 @@ public class User {
     @OneToMany(targetEntity = Comment.class)
     private List<Comment> comments; // ofUser
 
+    @Transient
+    private String roleName;
+
+    public String getRoleName() {
+        return getRole().getRoleOfUser();
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
     // Getter
     public Long getId() {
         return id;
@@ -130,12 +141,14 @@ public class User {
                 @NotNull String name,
                 @NotNull String email,
                 @NotNull Date registerDate,
-                @NotNull Role role) {
+                @NotNull Role role,
+                @NotNull String roleName) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.registerDate = registerDate;
         this.role = role;
+        this.roleName = roleName;
     }
 }

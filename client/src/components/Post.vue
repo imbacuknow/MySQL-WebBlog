@@ -130,7 +130,7 @@
                </v-col>
 
                <v-col class="my-2" cols="12" sm="5" md="8">
-                    <v-btn @click="checkPost()" x-large color="secondary" dark
+                    <v-btn @click="checkPost" x-large color="secondary" dark
                          >Post</v-btn
                     >
                </v-col>
@@ -148,7 +148,6 @@ export default {
           alertFailed: false,
           alertSuccess: false,
           alertmsg: undefined,
-          tagname: [],
           user: {},
           ArrName: [],
 
@@ -255,10 +254,11 @@ export default {
                          this.ArrName.push(this.model[i].text);
                     }
                }
-               console.log("ArrName:");
-               console.log(JSON.parse(JSON.stringify(this.ArrName)));
-               console.log("StorageNewTag: ");
-               console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
+               // console.log("ArrName:");
+               // console.log(JSON.parse(JSON.stringify(this.ArrName)));
+               // console.log("StorageNewTag: ");
+               // console.log(JSON.parse(JSON.stringify(this.storageNewTag)));
+
                this.addTag();
           },
           // Tag
@@ -292,7 +292,8 @@ export default {
                     this.ArrName = null;
                     this.model = null;
                     this.storageNewTag = null;
-                    this.getTag();
+                    // this.getTag();
+                    window.location.href = "/Post";
                }).catch((e) => {
                     console.log("Error in postYourContent(): " + e);
                });

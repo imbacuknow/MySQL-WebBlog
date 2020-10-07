@@ -1,7 +1,12 @@
 <template class="rounded-lg justify-center align-center">
      <div id="app">
           <v-app id="inspire">
-               <v-card max-width="780" max-height="auto" class="mx-auto">
+               <v-card 
+                    width="780" 
+                    height="auto" 
+                    class="mx-auto"
+                    v-if="list_posts.length != 0"
+               >
                     <v-container>
                          <v-row dense>
                               <v-col
@@ -9,7 +14,7 @@
                                    :key="i"
                                    cols="12"
                               >
-                                   <v-card color="#7d0c4a" dark>
+                                   <v-card class="m" color="#A03771" dark>
                                         <div
                                              class="d-flex flex-no-wrap justify-space-between"
                                         >
@@ -17,11 +22,22 @@
                                                   <v-card-title
                                                        class="headline"
                                                        v-text="item.title"
-                                                  ></v-card-title>
+                                                       @click="ReadMore(item.id)"
+                                                  />
 
-                                                  <v-card-subtitle
-                                                       v-text="item.story"
-                                                  ></v-card-subtitle>
+                                                  <v-card-subtitle>{{item.story.slice(0,440)}}...</v-card-subtitle>
+
+                                                  <v-card-action>
+                                                       <v-btn
+                                                       class="ml-5 mb-4"
+                                                       outlined
+                                                       rounded
+                                                       small
+                                                       @click="ReadMore(item.id)"
+                                                       >
+                                                       Read more
+                                                       </v-btn>
+                                                  </v-card-action>
                                              </div>
                                         </div>
                                    </v-card>
