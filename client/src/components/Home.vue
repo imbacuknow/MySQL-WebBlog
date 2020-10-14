@@ -61,7 +61,7 @@ export default {
                api.get("/webblog/post/home")
                     .then((response) => {
                          this.list_posts = response.data;
-                         console.log(JSON.parse(JSON.stringify(response.data)));
+                         // console.log(JSON.parse(JSON.stringify(response.data)));
                     })
                     .catch((e) => {
                          console.log("Error in getPost() :" + e);

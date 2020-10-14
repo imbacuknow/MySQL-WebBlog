@@ -8,7 +8,7 @@
                                    <v-row align="center" justify="center">
                                         <v-col cols="12" sm="8" md=10>
                                              <v-alert type="success" dismissible v-model="alertSuccess"
-                                                  >บันทึกข้อมูลสำเร็จ</v-alert
+                                                  >อัพเดทข้อมูลสำเร็จ</v-alert
                                              >
                                              <v-alert type="error" dismissible v-model="alertFailed"
                                                   >{{ alertmsg }}!</v-alert
@@ -83,6 +83,7 @@ export default {
           changeRoleOfUser() {
                api.put("/webblog/user/update/" + this.username + "/" + this.role)
                .then(() => {
+                    this.alertSuccess = true;
                     window.location.href = "/ManageUser";
                })
           },

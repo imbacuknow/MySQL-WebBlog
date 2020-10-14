@@ -116,7 +116,7 @@ export default {
                api.get("/webblog/user/login/" + this.username + "/" + this.password)
                .then((res) => {
                     this.clearAlert();
-                    this.alertFailed = true;
+                    this.alertSuccess = true;
                     
                     let user = res.data;
                     localStorage.setItem("user", JSON.stringify(user));

@@ -201,8 +201,8 @@ export default {
                api.get("/webblog/tag/showall")
                     .then((response) => {
                          this.items = response.data;
-                         console.log("items");
-                         console.log(JSON.parse(JSON.stringify(response.data)));
+                         // console.log("items");
+                         // console.log(JSON.parse(JSON.stringify(response.data)));
                     })
                     .catch((e) => {
                          console.log("Error in getTag():" + e);
@@ -265,7 +265,7 @@ export default {
           addTag() {
                api.post("/webblog/tag/add", this.storageNewTag)
                .then(() => {
-                    console.log("Added Tags");
+                    // console.log("Added Tags");
                })
                .catch((e) => {
                     console.log("Error in addTag(): " + e);

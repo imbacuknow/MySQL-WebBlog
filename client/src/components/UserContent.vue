@@ -115,7 +115,7 @@ export default {
                api.get("/webblog/post/content/" + this.content_id)
                .then((response) => {
                     this.set_content = response.data;
-                    console.log(JSON.parse(JSON.stringify(response.data)));
+                    // console.log(JSON.parse(JSON.stringify(response.data)));
                     this.getComments();
                }).catch((e) => {
                     console.log("Error in getForDisContent():" + e);
@@ -125,7 +125,7 @@ export default {
                api.get("/webblog/comment/postId/" + this.content_id)
                .then((res) => {
                     this.comments = res.data;
-                    console.log(JSON.parse(JSON.stringify(res.data)));
+                    // console.log(JSON.parse(JSON.stringify(res.data)));
                }).catch((e) => {
                     console.log("error in getComments(): "+ e);
                });
