@@ -14,6 +14,11 @@
                     <v-card-text>{{ set_content.story }}</v-card-text>
                </v-col>
 
+               <h4 class="ml-6 font-weight-regular" align="center"> Tag: </h4>
+               <template v-for="(item) in tags">
+                    <v-chip class="ma-1" :key="item.id">{{ item.tagName }} </v-chip>
+               </template>
+
                <v-col align="right">
                     <v-btn
                          class="ma-4"
@@ -48,9 +53,12 @@
                               <v-list-item :key="item.id">
                                    <v-list-item-content>
                                         <v-list-item-title>
-                                             <h4>
+                                             <h4 align="left">
                                                   {{ item.userName }}
                                              </h4>
+                                             <h5 class="font-weight-thin" align="right">
+                                                  {{ item.commentDate }}
+                                             </h5>
                                         </v-list-item-title>
                                         <v-list-item-subtitle
                                              class="black--text"
@@ -102,6 +110,7 @@ export default {
           set_com:[],
           cmt: "",
           user: [],
+          tags: []
      }),
      mounted() {
           this.getContent();
@@ -117,6 +126,7 @@ export default {
                     this.set_content = response.data;
                     // console.log(JSON.parse(JSON.stringify(response.data)));
                     this.getComments();
+                    this.getTags();
                }).catch((e) => {
                     console.log("Error in getForDisContent():" + e);
                });
@@ -128,6 +138,15 @@ export default {
                     // console.log(JSON.parse(JSON.stringify(res.data)));
                }).catch((e) => {
                     console.log("error in getComments(): "+ e);
+               });
+          },
+          getTags() {
+               api.get("webblog/tag/postId=" + this.content_id)
+               .then((res) => {
+                    this.tags = res.data;
+                    console.log(JSON.parse(JSON.stringify(res.data)));
+               }).catch((e) => {
+                    console.log("error in getTags(): "+ e);
                });
           },
           onClickCM() {

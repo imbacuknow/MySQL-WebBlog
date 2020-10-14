@@ -1,5 +1,6 @@
 package com.cpe.mysql.webblog.controller;
 
+import com.cpe.mysql.webblog.entity.PostTag;
 import com.cpe.mysql.webblog.entity.Tag;
 import com.cpe.mysql.webblog.model.TagModel;
 import com.cpe.mysql.webblog.repository.TagRepository;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -27,6 +29,11 @@ public class TagController {
     @GetMapping("showall")
     public Collection<Tag> getAllTag() {
         return tagRepository.findAll();
+    }
+
+    @GetMapping("postId={id}")
+    public List<PostTag> getTagByPostId(@PathVariable Long id) {
+        return tagService.retrieveTags(id);
     }
 
     @PostMapping("add")
