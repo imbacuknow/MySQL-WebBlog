@@ -8,7 +8,7 @@
                                    <v-row align="center" justify="center">
                                         <v-col cols="12" sm="6" md=9>
                                              <v-alert type="success" dismissible v-model="alertSuccess"
-                                                  >บันทึกข้อมูลสำเร็จ</v-alert
+                                                  >สมัครสมาชิกเรียบร้อย</v-alert
                                              >
                                              <v-alert type="error" dismissible v-model="alertFailed"
                                                   >{{ alertmsg }}!</v-alert
@@ -145,6 +145,7 @@ export default {
                     this.email = null;
                     this.username = null;
                     this.password = null;
+                    window.location.href = "/Login";
                }).catch((e) => {
                     console.log("error in createUser():" + e);
                     this.someError();

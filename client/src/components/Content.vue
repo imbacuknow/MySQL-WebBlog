@@ -57,7 +57,7 @@ export default {
                api.get("/webblog/post/content/" + this.content_id)
                .then((response) => {
                     this.set_content = response.data;
-                    console.log(JSON.parse(JSON.stringify(response.data)));
+                    // console.log(JSON.parse(JSON.stringify(response.data)));
                })
                .catch((e) => {
                     console.log("Error in getContent():" + e);
